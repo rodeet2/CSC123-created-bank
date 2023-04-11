@@ -12,15 +12,17 @@ public class Account implements Serializable {
 	private String accountName;
 	private Customer accountHolder;
 	private ArrayList<Transaction> transactions;
-	
+	private String Currency;
+
 	private boolean open=true;
 	private int accountNumber;
 
-	protected Account(String name, Customer customer) {
+	protected Account(String name, Customer customer, String currency) {
 		accountName=name;
 		accountHolder=customer;
 		transactions=new ArrayList<Transaction>();
 		accountNumber=UniqueCounter.nextValue();
+		Currency = currency;
 	}
 	
 	public String getAccountName() {
@@ -42,6 +44,9 @@ public class Account implements Serializable {
 		return workingBalance;
 	}
 	
+	public String Currency() {
+		return accountName;
+	}
 	
 	
 	

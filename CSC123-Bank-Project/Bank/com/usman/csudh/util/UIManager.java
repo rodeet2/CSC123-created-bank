@@ -1,6 +1,8 @@
 package com.usman.csudh.util;
 
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -52,7 +54,6 @@ public class UIManager {
 	}
 	
 	
-	
 	public  int getMainOption() throws IOException{
 		int choice;
 		int menuIndex=1;
@@ -80,6 +81,26 @@ public class UIManager {
 		print(msg, null);
 		return this.scanner.next();
 	}
+	
+	public  String readcurrency(String msg)throws IOException {
+		print(msg, null);
+		while (true) {
+	        String input = this.scanner.next();
+	        try {
+	            if (csvcheck(input)) {
+	            	
+	                return input;
+	            }
+	        } catch (Exception e) {
+	        	print("Not valid!",new Object[] {});
+	        }
+	        print("Invalid Currency Input, try again!", new Object[] {});
+
+	    }
+		
+	}
+	
+	
 
 	public  double readDouble(String msg) throws IOException{
 
@@ -93,7 +114,7 @@ public class UIManager {
 
 	}
 
-	public  int readInt(String msg)throws IOException {
+	public int readInt(String msg)throws IOException {
 		while (true) {
 			try {
 				return Integer.parseInt(readToken(msg));
@@ -104,12 +125,28 @@ public class UIManager {
 
 	}
 
-	public  void print(String s, Object[] variables) throws IOException {
+	public void print(String s, Object[] variables) throws IOException {
 		
 		s=String.format(s, variables); 
 		this.out.write(s.getBytes());
 		this.out.flush();
 
 	}
+	
+	public boolean csvcheck(String item) {
+		String line = "";
+		  try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\srozbu1\\CSC123-Resources\\Created bank\\CSC123-created-bank\\CSC123-Bank-Project\\exchange-rate.csv"))) {
+	            while ((line = br.readLine()) != null) {
+	                if (line.contains(item)) {
+	                    return true;
+	                }
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        return false;
+	}
+	
+	
 }
 

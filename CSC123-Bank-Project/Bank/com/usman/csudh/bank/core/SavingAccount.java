@@ -2,11 +2,9 @@ package com.usman.csudh.bank.core;
 public class SavingAccount extends Account{
 	private static final long serialVersionUID = 1L;
 
-	public SavingAccount(Customer customer) {
-		super("Saving", customer);
+	public SavingAccount(Customer customer, String currency) {
+		super("Saving", customer,currency);
 	}
-
-
 
 	//Withdrawals only allowed against positive balances 
 	public void withdraw(double amount) throws InsufficientBalanceException {
