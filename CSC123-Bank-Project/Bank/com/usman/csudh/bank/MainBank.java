@@ -35,10 +35,8 @@ public class MainBank {
 
 
 	//Declare main menu and prompt to accept user input
-	public static final String[] menuOptions = { "Open Checking Account%n","Open Saving Account%n", "List Accounts%n","View Statement%n", "Deposit Funds%n", "Withdraw Funds%n",
+	public static final String[] menuOptions = { "Open Checking Account%n","Open Saving Account%n", "List Accounts%n","View Statement%n","Account Information%n",  "Deposit Funds%n", "Withdraw Funds%n",
 			"Currency Conversion%n","Close an Account%n", "Exit%n" };
-	public static final String[] menuOptions2 = { "Open Checking Account%n","Open Saving Account%n", "List Accounts%n","View Statement%n", "Deposit Funds%n", "Withdraw Funds%n",
-			"Close an Account%n", "Exit%n" };
 	
 	public static final String MSG_PROMPT = "%nEnter choice: ";
 
@@ -71,9 +69,8 @@ public class MainBank {
 		Account acc;
 		int option = 0;
 
-		UIManager ui1 = new UIManager(this.in,this.out,menuOptions,MSG_PROMPT);
+		UIManager ui = new UIManager(this.in,this.out,menuOptions,MSG_PROMPT);
 		
-		UIManager ui2 = new UIManager(this.in, this.out,menuOptions2,MSG_PROMPT);
 		
 		File currencyfile = new File("C:\\Users\\srozbu1\\CSC123-Resources\\Created bank\\CSC123-created-bank\\CSC123-Bank-Project\\exchange-rate.csv");
         if (currencyfile.exists()) {forexfound = true;}else{System.out.print("Currency file could not be loaded \n") ;};
@@ -82,15 +79,11 @@ public class MainBank {
 		try {
 						
 			do {
-				UIManager ui = null;
-				if (forexfound == false) {ui = ui2;};
-				if (forexfound == true) {ui = ui1;};
-				
+		
 				option = ui.getMainOption(); //Render main menu
 
 				switch (option) {
 				case 1:
-				
 					
 					//Compact statement to accept user input, open account, and print the result including the account number
 					
@@ -147,8 +140,27 @@ public class MainBank {
 					}		
 					
 					break;
-
+					
 				case 5:
+
+					//show account info
+					
+					
+					if (forexfound == true) {
+				
+						Bank.account_info_withfile(ui.readInt(MSG_ACCOUNT_NUMBER));
+						
+					}else {
+						
+						Bank.account_info(ui.readInt(MSG_ACCOUNT_NUMBER));
+						
+					}
+					
+					
+					break;
+					
+
+				case 6:
 					//find account, deposit money and print result
 					
 					try {
@@ -162,7 +174,9 @@ public class MainBank {
 					}
 					break;
 					
-				case 6:
+					
+					
+				case 7:
 					//find account, withdraw money and print result
 					try {
 						int accountNumber=ui.readInt(MSG_ACCOUNT_NUMBER);
@@ -177,7 +191,7 @@ public class MainBank {
 					break;
 					
 					
-				case 7:
+				case 8:
 					//Conversion
 					
 					//check for file again
@@ -190,7 +204,7 @@ public class MainBank {
 					
 					break;
 
-				case 8:
+				case 9:
 					//find account and close it
 					
 					try {
@@ -212,6 +226,8 @@ public class MainBank {
 		} catch (IOException e) {
 			e.printStackTrace();
 
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

@@ -1,4 +1,5 @@
 package com.usman.csudh.bank.core;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ public class Account implements Serializable {
 	private Customer accountHolder;
 	private ArrayList<Transaction> transactions;
 	private String Currency;
+	
 
 	private boolean open=true;
 	private int accountNumber;
@@ -83,9 +85,19 @@ public class Account implements Serializable {
 	public int getAccountNumber() {
 		return accountNumber;
 	}
+	
+	public String getCurrency() {
+		return Currency;
+	}
 
 	public String toString() {
-		String aName=accountNumber+"("+accountName+")"+" : "+accountHolder.toString()+ " : "+getBalance()+" : "+(open?"Account Open":"Account Closed");
+		// check for file
+		double converted = 0;
+		File currencyfile = new File("C:\\Users\\srozbu1\\CSC123-Resources\\Created bank\\CSC123-created-bank\\CSC123-Bank-Project\\exchange-rate.csv");
+        // convert balance to USD
+		if (currencyfile.exists()) { converted = cconverter.convert_and_return(Currency, (int)getBalance(),"USD");}
+
+		String aName=accountNumber+"("+accountName+")"+" : "+accountHolder.toString()+" : "+ Currency + " : "+getBalance() +" : "+ converted + " : "+(open?"Account Open":"Account Closed");
 		return aName;
 	}
 	 

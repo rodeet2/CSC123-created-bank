@@ -26,7 +26,6 @@ public class Bank {
 	}
 
 	
-	
 	public static Account lookup(int accountNumber) throws NoSuchAccountException{
 		if(!accounts.containsKey(accountNumber)) {
 			throw new NoSuchAccountException("\nAccount number: "+accountNumber+" nout found!\n\n");
@@ -54,6 +53,30 @@ public class Bank {
 		return lookup(accountNumber).getBalance();
 	}
 
+	public static void account_info_withfile(int accountNumber) throws NoSuchAccountException {
+		Account a = lookup(accountNumber);
+		Customer c = a.getAccountHolder();
+		System.out.print("Account Number: " + a.getAccountNumber() + "\n");
+		System.out.print("Name: " + c.getFirstName() + c.getLastName() + "\n");
+		System.out.print("SSN: " + c.getSSN() + "\n" );
+		System.out.print("Currency: " + a.getCurrency() + "\n");
+		System.out.print("Currency Balance: " + a.getBalance() + "\n");
+		System.out.print("USD Balance: " + cconverter.convert_and_return(a.getCurrency(), (int)a.getBalance(), "USD"));
+		System.out.println("");
+	}
+	
+	public static void account_info(int accountNumber) throws NoSuchAccountException {
+		Account a = lookup(accountNumber);
+		Customer c = a.getAccountHolder();
+		System.out.print("Account Number: " + a.getAccountNumber() + "\n");
+		System.out.print("Name: " + c.getFirstName() + c.getLastName() + "\n");
+		System.out.print("SSN: " + c.getSSN() + "\n" );
+		System.out.print("Currency: " + a.getCurrency() + "\n");
+		System.out.print("Currency Balance: " + a.getBalance() + "\n");
+		System.out.print("Unable to convert to USD, missing file");
+		System.out.println("");
+
+	}
 	public static void listAccounts(OutputStream out) throws IOException{
 		
 		out.write((byte)10);
