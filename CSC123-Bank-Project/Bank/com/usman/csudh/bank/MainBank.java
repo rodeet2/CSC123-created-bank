@@ -1,5 +1,6 @@
 package com.usman.csudh.bank;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -11,6 +12,7 @@ import com.usman.csudh.bank.core.InsufficientBalanceException;
 import com.usman.csudh.bank.core.NoSuchAccountException;
 import com.usman.csudh.bank.core.cconverter;
 import com.usman.csudh.util.UIManager;
+import com.usman.csudh.util.UniqueCounter;
 
 public class MainBank {
 //Test 
@@ -55,22 +57,38 @@ public class MainBank {
 	
 	//Main method. 
 	public static void main(String[] args) {
+        
+		//Load previous saved
+		try {
+			Bank.load();
 
-		new MainBank(System.in,System.out).run();
+			
+		} catch (FileNotFoundException e2) {
+        System.err.print("File was not found, could not load previous session \n");
+		}
+		
+	
+	try {
+		UniqueCounter.load();
 
+	} catch (FileNotFoundException e2) {
+    System.err.print("Counter was not found, could not load previous session \n");
 	}
 	
+	new MainBank(System.in,System.out).run();
+
+}
 	
 	//The core of the program responsible for providing user experience.
 	public void run() {
 
+		
 		Boolean forexfound = false;
 		
 		Account acc;
 		int option = 0;
 
 		UIManager ui = new UIManager(this.in,this.out,menuOptions,MSG_PROMPT);
-		
 		
 		File currencyfile = new File("C:\\Users\\srozbu1\\CSC123-Resources\\Created bank\\CSC123-created-bank\\CSC123-Bank-Project\\exchange-rate.csv");
         if (currencyfile.exists()) {forexfound = true;}else{System.out.print("Currency file could not be loaded \n") ;};
@@ -119,9 +137,8 @@ public class MainBank {
 												ui.readToken(MSG_LAST_NAME), ui.readcurrency(MSG_SSN),"USD")
 										.getAccountNumber() });
 					}
-					
-					
 					break;
+					
 
 				case 3:
 					
@@ -136,7 +153,6 @@ public class MainBank {
 						Bank.printAccountTransactions(ui.readInt(MSG_ACCOUNT_NUMBER),this.out);
 					} catch (NoSuchAccountException e1) {
 						this.handleException(ui, e1);
-
 					}		
 					
 					break;
@@ -203,7 +219,8 @@ public class MainBank {
 
 					
 					break;
-
+					
+		
 				case 9:
 					//find account and close it
 					
@@ -222,6 +239,9 @@ public class MainBank {
 				}
 
 			} while (option != menuOptions.length);
+			
+			Bank.Save();
+			UniqueCounter.Save();
 
 		} catch (IOException e) {
 			e.printStackTrace();

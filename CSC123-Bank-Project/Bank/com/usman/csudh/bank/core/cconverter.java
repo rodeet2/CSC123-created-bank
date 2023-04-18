@@ -26,7 +26,6 @@ public class cconverter {
 			  System.out.print("The exchange rate is " + get_rate_fromfile(code1) + " and you will get USD " + ammount * get_rate_fromfile(code1) + "\n");
 			  System.out.println("");
 		  }
-			
 		 
 	 }else {
 		 

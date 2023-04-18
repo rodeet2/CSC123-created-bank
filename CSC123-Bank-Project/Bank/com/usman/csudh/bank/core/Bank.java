@@ -1,5 +1,12 @@
 package com.usman.csudh.bank.core;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Map;
@@ -95,9 +102,53 @@ public class Bank {
 		
 		lookup(accountNumber).printTransactions(out);
 	}
-				
+
+	
+	public static void Save() throws IOException{
+				    
+		FileOutputStream fileoutput = new FileOutputStream("C:\\Users\\srozbu1\\CSC123-Resources\\Created bank\\CSC123-created-bank\\CSC123-Bank-Project\\bankfiles.dat");
+		
+		
+        ObjectOutputStream objectoutput = new ObjectOutputStream(fileoutput);
+        try {
+        	objectoutput.writeObject(accounts);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}	
+	}
 	
 	
-	
+	public static void load() throws FileNotFoundException{
+		
+		    
+		  
+FileInputStream fileinput = new FileInputStream("C:\\Users\\srozbu1\\CSC123-Resources\\Created bank\\CSC123-created-bank\\CSC123-Bank-Project\\bankfiles.dat");
+		
+		
+        ObjectInputStream objectinput = null;
+        
+		try {
+			objectinput = new ObjectInputStream(fileinput);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+        try {
+
+        	Object data = objectinput.readObject();
+        	
+        	accounts = (Map<Integer, Account>) data;
+        	
+        } catch (IOException e) {
+			
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+        
+		
+	}
 	
 }
