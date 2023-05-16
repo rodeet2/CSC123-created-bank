@@ -1,3 +1,8 @@
+
+
+//Shimran Rodeet Rozbu, srozbu1@toromail.csudh.edu
+// Github: https://github.com/rodeet2/CSC123-created-bank/tree/main/CSC123-Bank-Project
+
 package com.usman.csudh.bank;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,6 +16,7 @@ import com.usman.csudh.bank.core.Bank;
 import com.usman.csudh.bank.core.InsufficientBalanceException;
 import com.usman.csudh.bank.core.NoSuchAccountException;
 import com.usman.csudh.bank.core.cconverter;
+import com.usman.csudh.bank.net.conversionfilereaderonline;
 import com.usman.csudh.util.UIManager;
 import com.usman.csudh.util.UniqueCounter;
 
@@ -56,15 +62,13 @@ public class MainBank {
 	
 	
 	//Main method. 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
         
 		//Load previous saved
 		try {
 			Bank.load();
-
-			
 		} catch (FileNotFoundException e2) {
-        System.err.print("File was not found, could not load previous session \n");
+        System.err.print("Bank data was not found, could not load previous session \n");
 		}
 		
 	
@@ -78,24 +82,18 @@ public class MainBank {
 	new MainBank(System.in,System.out).run();
 
 }
-	
 	//The core of the program responsible for providing user experience.
-	public void run() {
-
+	public void run() throws Exception {
 		
 		Boolean forexfound = false;
-		
 		Account acc;
 		int option = 0;
-
 		UIManager ui = new UIManager(this.in,this.out,menuOptions,MSG_PROMPT);
 		
-		File currencyfile = new File("C:\\Users\\srozbu1\\CSC123-Resources\\Created bank\\CSC123-created-bank\\CSC123-Bank-Project\\exchange-rate.csv");
-        if (currencyfile.exists()) {forexfound = true;}else{System.out.print("Currency file could not be loaded \n") ;};
+        if (conversionfilereaderonline.statusfind()) {forexfound = true;}else{System.out.print("Currency Services are currently off as settings says: \n" + new settings().support_currencies) ;};
         
-
 		try {
-						
+				
 			do {
 		
 				option = ui.getMainOption(); //Render main menu
@@ -208,18 +206,15 @@ public class MainBank {
 					
 					
 				case 8:
-					//Conversion
 					
 					//check for file again
-			        if (currencyfile.exists()) {
+			        if (forexfound==true) {
 			        	
 			        	new cconverter().convert(ui.readcurrency(MSG_AMMOUNT_selling), ui.readInt(MSG_AMMOUNT_CONVERT), ui.readcurrency(MSG_AMMOUNT_buying));
 			     
-			        }else{System.out.print("Currency file was not found \n") ;};
+			        }else{System.out.print("Currency Conversions are not possible\n") ;};
 
-					
-					break;
-					
+					break;					
 		
 				case 9:
 					//find account and close it

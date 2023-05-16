@@ -121,10 +121,8 @@ public class Bank {
 	
 	public static void load() throws FileNotFoundException{
 		
-		    
-		  
+		   
 FileInputStream fileinput = new FileInputStream("C:\\Users\\srozbu1\\CSC123-Resources\\Created bank\\CSC123-created-bank\\CSC123-Bank-Project\\bankfiles.dat");
-		
 		
         ObjectInputStream objectinput = null;
         
