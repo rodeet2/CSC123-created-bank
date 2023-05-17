@@ -90,7 +90,7 @@ public class MainBank {
 		int option = 0;
 		UIManager ui = new UIManager(this.in,this.out,menuOptions,MSG_PROMPT);
 		
-        if (conversionfilereaderonline.statusfind()) {forexfound = true;}else{System.out.print("Currency Services are currently off as settings says: \n" + new settings().support_currencies) ;};
+        if (new settings().getSupport_currencies()) {forexfound = true;}else{System.out.print("Currency Services are currently off as settings says: \n" + new settings().support_currencies) ;};
         
 		try {
 				

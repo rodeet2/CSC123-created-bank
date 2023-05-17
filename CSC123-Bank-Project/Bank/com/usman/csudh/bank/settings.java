@@ -13,6 +13,8 @@ public class settings {
     String	currencies_source;
 	String	webservice_url;
 	String  currency_file;
+	String apiurl;
+	
 	
 	public settings() {
 		try {
@@ -43,6 +45,11 @@ public class settings {
 	}
 
 	
+	public String getapiurl() throws Exception {
+		
+		return apiurl;
+	}
+	
 	public void getsettings() throws Exception{
 	  try {
 
@@ -57,7 +64,8 @@ public class settings {
 	            if(full_line.contains("currencies.source")){currencies_source = full_line.replace("currencies.source=", ""); }
 	            if(full_line.contains("webservice.url")){webservice_url = full_line.replace("webservice.url=","" );}
 	            if(full_line.contains("currency.file")){currency_file = full_line.replace("currency.file=", "");}
-	        
+	            if(full_line.contains("rest.url")){apiurl = full_line.replace("rest.url=", "");}
+
 	        }
 	        reader.close();
 	        System.out.println(data);

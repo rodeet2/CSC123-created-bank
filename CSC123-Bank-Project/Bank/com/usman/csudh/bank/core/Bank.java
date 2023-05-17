@@ -60,7 +60,7 @@ public class Bank {
 		return lookup(accountNumber).getBalance();
 	}
 
-	public static void account_info_withfile(int accountNumber) throws NoSuchAccountException {
+	public static void account_info_withfile(int accountNumber) throws Exception {
 		Account a = lookup(accountNumber);
 		Customer c = a.getAccountHolder();
 		System.out.print("Account Number: " + a.getAccountNumber() + "\n");
